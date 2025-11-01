@@ -9,7 +9,6 @@
         </div>
       </div>
 
-      <!-- call submitForm method with all form values if form is valid -->
       <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
         
         <!-- First Name -->
@@ -25,20 +24,23 @@
             formControlName="firstName"
           />
           <div
-            *ngIf="complexForm.get('firstName')?.touched && complexForm.get('firstName')?.hasError('required')"
+            *ngIf="complexForm.get('firstName')?.dirty && complexForm.get('firstName')?.hasError('required')"
             class="alert alert-danger error-msg"
+            id="error-no-firstname"
           >
             {{ emptyFirstname }}
           </div>
           <div
-            *ngIf="complexForm.get('firstName')?.touched && complexForm.get('firstName')?.hasError('minlength')"
+            *ngIf="complexForm.get('firstName')?.dirty && complexForm.get('firstName')?.hasError('minlength')"
             class="alert alert-danger error-msg"
+            id="error-minlength-firstname"
           >
             {{ minlengthFirstname }}
           </div>
           <div
-            *ngIf="complexForm.get('firstName')?.touched && complexForm.get('firstName')?.hasError('maxlength')"
+            *ngIf="complexForm.get('firstName')?.dirty && complexForm.get('firstName')?.hasError('maxlength')"
             class="alert alert-danger error-msg"
+            id="error-maxlength-firstname"
           >
             {{ maxlengthFirstname }}
           </div>
@@ -57,20 +59,23 @@
             formControlName="lastName"
           />
           <div
-            *ngIf="complexForm.get('lastName')?.touched && complexForm.get('lastName')?.hasError('required')"
+            *ngIf="complexForm.get('lastName')?.dirty && complexForm.get('lastName')?.hasError('required')"
             class="alert alert-danger error-msg"
+            id="error-no-lastname"
           >
             {{ emptyLastname }}
           </div>
           <div
-            *ngIf="complexForm.get('lastName')?.touched && complexForm.get('lastName')?.hasError('minlength')"
+            *ngIf="complexForm.get('lastName')?.dirty && complexForm.get('lastName')?.hasError('minlength')"
             class="alert alert-danger error-msg"
+            id="error-minlength-lastname"
           >
             {{ minlengthLastname }}
           </div>
           <div
-            *ngIf="complexForm.get('lastName')?.touched && complexForm.get('lastName')?.hasError('maxlength')"
+            *ngIf="complexForm.get('lastName')?.dirty && complexForm.get('lastName')?.hasError('maxlength')"
             class="alert alert-danger error-msg"
+            id="error-maxlength-lastname"
           >
             {{ maxlengthLastname }}
           </div>
@@ -100,8 +105,9 @@
             <label class="label-content" for="female">Female</label>
           </div>
           <div
-            *ngIf="complexForm.get('gender')?.touched && complexForm.get('gender')?.hasError('required')"
+            *ngIf="complexForm.get('gender')?.dirty && complexForm.get('gender')?.hasError('required')"
             class="alert alert-danger error-msg"
+            id="error-no-gender"
           >
             {{ noGender }}
           </div>
@@ -124,8 +130,9 @@
             />
           </div>
           <div
-            *ngIf="complexForm.get('dob')?.touched && complexForm.get('dob')?.hasError('required')"
+            *ngIf="complexForm.get('dob')?.dirty && complexForm.get('dob')?.hasError('required')"
             class="alert alert-danger error-msg"
+            id="error-no-dob"
           >
             {{ noDob }}
           </div>
@@ -144,16 +151,25 @@
             formControlName="mobile"
           />
           <div
-            *ngIf="complexForm.get('mobile')?.touched && complexForm.get('mobile')?.hasError('required')"
+            *ngIf="complexForm.get('mobile')?.dirty && complexForm.get('mobile')?.hasError('required')"
             class="alert alert-danger error-msg"
+            id="error-no-mobile"
           >
             {{ noMobile }}
           </div>
           <div
-            *ngIf="complexForm.get('mobile')?.touched && complexForm.get('mobile')?.hasError('pattern')"
+            *ngIf="complexForm.get('mobile')?.dirty && complexForm.get('mobile')?.hasError('pattern')"
             class="alert alert-danger error-msg"
+            id="error-number-mobile"
           >
             {{ numberMobile }}
+          </div>
+          <div
+            *ngIf="complexForm.get('mobile')?.dirty && complexForm.get('mobile')?.hasError('maxlength')"
+            class="alert alert-danger error-msg"
+            id="error-maxlength-mobile"
+          >
+            {{ maxlengthMobile }}
           </div>
         </div>
 
@@ -170,14 +186,16 @@
             formControlName="email"
           />
           <div
-            *ngIf="complexForm.get('email')?.touched && complexForm.get('email')?.hasError('required')"
+            *ngIf="complexForm.get('email')?.dirty && complexForm.get('email')?.hasError('required')"
             class="alert alert-danger error-msg"
+            id="error-no-email"
           >
             {{ noEmail }}
           </div>
           <div
-            *ngIf="complexForm.get('email')?.touched && complexForm.get('email')?.hasError('email')"
+            *ngIf="complexForm.get('email')?.dirty && complexForm.get('email')?.hasError('email')"
             class="alert alert-danger error-msg"
+            id="error-pattern-email"
           >
             {{ patternEmail }}
           </div>
@@ -198,7 +216,6 @@
 
         <!-- Submit Button -->
         <div class="form-group">
-          <!-- disable button if form not valid -->
           <button
             type="submit"
             id="submit-btn"
