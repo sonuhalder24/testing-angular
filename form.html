@@ -186,14 +186,16 @@
             formControlName="email"
           />
           <div
-            *ngIf="complexForm.get('email')?.dirty && complexForm.get('email')?.hasError('required')"
+            *ngIf="complexForm.get('email')?.hasError('required')"
             class="alert alert-danger error-msg"
             id="error-no-email"
           >
             {{ noEmail }}
           </div>
           <div
-            *ngIf="complexForm.get('email')?.dirty && complexForm.get('email')?.hasError('email')"
+            *ngIf="!complexForm.get('email')?.hasError('required')
+                && complexForm.get('email')?.hasError('pattern')
+                && (complexForm.get('email')?.dirty || complexForm.get('email')?.touched)"
             class="alert alert-danger error-msg"
             id="error-pattern-email"
           >
