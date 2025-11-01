@@ -18,7 +18,7 @@
       <tr id="table-row" *ngFor="let appointment of allAppointments">
         <td id="app-id">{{appointment.id}}</td>
         <td id="patient-id">{{appointment.patientId}}</td>
-        <td id="patient-name">{{ `${appointment.patientFirstName} ${appointment.patientLastName}` }}</td>
+        <td id="patient-name">{{appointment.patientFirstName + appointment.patientLastName }}</td>
         <td id="table-disease" class="td-column">{{appointment.disease}}</td>
         <td id="table-priority">{{appointment.priority}}</td>
         <td id="table-tentativedate">{{appointment.tentativedate}}</td>
