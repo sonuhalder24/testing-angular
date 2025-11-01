@@ -94,8 +94,7 @@ export class FormComponent implements OnInit {
         this.patientDetails.email,
         [
           Validators.required,
-          // Validators.email,
-          Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
+          Validators.email,
           Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$')
         ]
       ],
