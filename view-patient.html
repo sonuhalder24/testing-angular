@@ -150,8 +150,8 @@
         <td id="table-requestedOn">{{appointment.registeredTime}}</td>
         <td class="column-btn">
           <!-- call cancelAppointment method with selected id when clicking on this button-->
-          <button id="user-cancel" class="btn btn-danger btn-spc">
-            <span class="btn-value" (click)="cancelAppointment(appointment.id)">Cancel Appointment</span>
+          <button id="user-cancel" class="btn btn-danger btn-spc" (click)="cancelAppointment(appointment.id)">
+            <span class="btn-value" >Cancel Appointment</span>
           </button>
         </td>
       </tr>
