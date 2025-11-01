@@ -14,13 +14,14 @@ export class ApiService {
 
   constructor(private http: HttpClient) {
     this.API_URL = 'http://localhost:5000/api';
+    this.AUTH_API_URL = this.API_URL + this.AUTH_API_URL;
   }
 
   public checkLogin(username: string, password: string): Observable<Credentials> {
-    return this.http.post<Credentials>(`${this.API_URL}${this.AUTH_API_URL}`, {
+    return this.http.post<Credentials>(this.AUTH_API_URL, {
       username,
       password
-    }).pipe(catchError(this.handleError));
+    }).pipe(catchError((err) => throwError(err)));
   }
 
   public getUserDetails(userId: number): Observable<Users> {
