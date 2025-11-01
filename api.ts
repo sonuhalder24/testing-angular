@@ -13,7 +13,7 @@ export class ApiService {
   AUTH_API_URL = '/auth/server/';
 
   constructor(private http: HttpClient) {
-    this.API_URL = 'http://localhost:5000/api';
+    this.API_URL = 'api';
     this.AUTH_API_URL = this.API_URL + this.AUTH_API_URL;
   }
 
