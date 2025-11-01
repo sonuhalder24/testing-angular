@@ -1,0 +1,214 @@
+<app-header></app-header>
+
+<div id="form-container" [formGroup]="complexForm">
+  <div class="form">
+    <div class="form-content">
+      <div class="col-sm-12">
+        <div class="col-sm-8 div-header">
+          <h2 class="header">Enter Patient details</h2>
+        </div>
+      </div>
+
+      <!-- call submitForm method with all form values if form is valid -->
+      <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
+        
+        <!-- First Name -->
+        <div class="form-group">
+          <label class="label-name">
+            First Name:<span class="required">*</span>
+          </label>
+          <input
+            id="firstname"
+            class="form-control text-box"
+            type="text"
+            placeholder="FIRSTNAME"
+            formControlName="firstName"
+          />
+          <div
+            *ngIf="complexForm.get('firstName')?.touched && complexForm.get('firstName')?.hasError('required')"
+            class="alert alert-danger error-msg"
+          >
+            {{ emptyFirstname }}
+          </div>
+          <div
+            *ngIf="complexForm.get('firstName')?.touched && complexForm.get('firstName')?.hasError('minlength')"
+            class="alert alert-danger error-msg"
+          >
+            {{ minlengthFirstname }}
+          </div>
+          <div
+            *ngIf="complexForm.get('firstName')?.touched && complexForm.get('firstName')?.hasError('maxlength')"
+            class="alert alert-danger error-msg"
+          >
+            {{ maxlengthFirstname }}
+          </div>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+          <label class="label-name">
+            Last Name:<span class="required">*</span>
+          </label>
+          <input
+            id="lastname"
+            class="form-control text-box"
+            type="text"
+            placeholder="LASTNAME"
+            formControlName="lastName"
+          />
+          <div
+            *ngIf="complexForm.get('lastName')?.touched && complexForm.get('lastName')?.hasError('required')"
+            class="alert alert-danger error-msg"
+          >
+            {{ emptyLastname }}
+          </div>
+          <div
+            *ngIf="complexForm.get('lastName')?.touched && complexForm.get('lastName')?.hasError('minlength')"
+            class="alert alert-danger error-msg"
+          >
+            {{ minlengthLastname }}
+          </div>
+          <div
+            *ngIf="complexForm.get('lastName')?.touched && complexForm.get('lastName')?.hasError('maxlength')"
+            class="alert alert-danger error-msg"
+          >
+            {{ maxlengthLastname }}
+          </div>
+        </div>
+
+        <!-- Gender -->
+        <div class="form-group">
+          <label class="label-name">
+            Gender:<span class="required">*</span>
+          </label>
+          <div class="input-div">
+            <input
+              type="radio"
+              id="male"
+              class="input-content"
+              value="Male"
+              formControlName="gender"
+            />
+            <label class="label-content" for="male">Male</label>
+            <input
+              type="radio"
+              id="female"
+              class="input-content"
+              value="Female"
+              formControlName="gender"
+            />
+            <label class="label-content" for="female">Female</label>
+          </div>
+          <div
+            *ngIf="complexForm.get('gender')?.touched && complexForm.get('gender')?.hasError('required')"
+            class="alert alert-danger error-msg"
+          >
+            {{ noGender }}
+          </div>
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="form-group">
+          <label class="label-name">
+            Date of birth:<span class="required">*</span>
+          </label>
+          <div>
+            <input
+              id="date-input"
+              class="form-control date-input"
+              type="date"
+              placeholder="Date of birth"
+              min="1968-01-01"
+              [max]="today"
+              formControlName="dob"
+            />
+          </div>
+          <div
+            *ngIf="complexForm.get('dob')?.touched && complexForm.get('dob')?.hasError('required')"
+            class="alert alert-danger error-msg"
+          >
+            {{ noDob }}
+          </div>
+        </div>
+
+        <!-- Mobile Number -->
+        <div class="form-group">
+          <label class="label-name">
+            Contact number:<span class="required">*</span>
+          </label>
+          <input
+            id="mobile"
+            class="form-control text-box"
+            type="text"
+            placeholder="mobile number"
+            formControlName="mobile"
+          />
+          <div
+            *ngIf="complexForm.get('mobile')?.touched && complexForm.get('mobile')?.hasError('required')"
+            class="alert alert-danger error-msg"
+          >
+            {{ noMobile }}
+          </div>
+          <div
+            *ngIf="complexForm.get('mobile')?.touched && complexForm.get('mobile')?.hasError('pattern')"
+            class="alert alert-danger error-msg"
+          >
+            {{ numberMobile }}
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="label-name" for="email">
+            Email:<span class="required">*</span>
+          </label>
+          <input
+            id="email"
+            class="form-control text-box"
+            type="email"
+            placeholder="example:abc12@tcs.com"
+            formControlName="email"
+          />
+          <div
+            *ngIf="complexForm.get('email')?.touched && complexForm.get('email')?.hasError('required')"
+            class="alert alert-danger error-msg"
+          >
+            {{ noEmail }}
+          </div>
+          <div
+            *ngIf="complexForm.get('email')?.touched && complexForm.get('email')?.hasError('email')"
+            class="alert alert-danger error-msg"
+          >
+            {{ patternEmail }}
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label class="label-name" for="description">
+            Description: <span class="xs-font">(Optional)</span>
+          </label>
+          <textarea
+            id="description"
+            class="form-control"
+            placeholder="Briefly describe the issue"
+            formControlName="description"
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+          <!-- disable button if form not valid -->
+          <button
+            type="submit"
+            id="submit-btn"
+            class="btn btn-primary submit-btn"
+            [disabled]="!complexForm.valid"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
