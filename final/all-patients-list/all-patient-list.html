@@ -1,0 +1,35 @@
+<app-header></app-header>
+  <div class="table-div">
+    <table class="table-class">
+      <thead>
+        <tr class="table-head">
+          <th>Patient ID</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>DOB(yyyy-MM-dd)</th>
+          <th>Mobile</th>
+          <th>Email</th>
+          <th>Registered on</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- display all patients list -->
+        <tr *ngFor="let patient of allPatients" id="table-row">
+          <td id="table-id">{{ patient.patient_Id }}</td>
+          <td id="table-firstname" class="td-column">{{ patient.patient_name }}</td>
+          <td id="table-gender">{{ patient.patient_gender }}</td>
+          <td id="table-dob">{{ patient.patient_dob | date: 'yyyy-MM-dd' }}</td>
+          <td id="table-mobile">{{ patient.patient_mobile }}</td>
+          <td id="table-email">{{ patient.patient_email }}</td>
+          <td id="table-registeredOn">{{ patient.registeredDate | date: 'yyyy-MM-dd' }}</td>
+          <td class="column-btn">
+            <!-- ✅ Call view() with selected id -->
+            <a id="view" class="view-details" (click)="view(patient.patient_Id)">
+              View Details
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
