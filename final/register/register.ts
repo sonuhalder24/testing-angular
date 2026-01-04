@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { Observable } from 'rxjs';
-// import * as alertify from 'alertify.js';
 import { Users } from '../../models/users';
 
 @Component({
@@ -14,8 +13,8 @@ import { Users } from '../../models/users';
 
 export class RegisterNewUserComponent implements OnInit {
 
-	regNewUser = new Users;
-	signupForm: FormGroup;
+  regNewUser = new Users;
+  signupForm: FormGroup;
 
   emptyUserName = 'You must enter a username';
   minlengthUserName = 'User name must be at least 3 characters long';
@@ -32,34 +31,64 @@ export class RegisterNewUserComponent implements OnInit {
   locationErrMsg = 'You must enter the location';
 
   constructor(private route: Router, private dataService: DataService) {
-   }
+  }
 
   ngOnInit() {
-
     // add necessary validators
-
     this.signupForm = new FormGroup({
-      userName: new FormControl(''),
-      password: new FormControl(''),
-      mobile: new FormControl(''),
-      email: new FormControl(''),
-      location: new FormControl('')
+      userName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(20),
+        Validators.pattern(/^[a-zA-Z0-9]+$/)
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(20),
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
+      ]),
+      mobile: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[0-9]{10}$/)
+      ]),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+      ]),
+      location: new FormControl('', [
+        Validators.required
+      ])
     });
   }
 
   signUp() {
-
     // call regNewUser method to perform signup operation
-    // if success, redirect to login page
-    // else display appropriate error message
-       // reset the form
-    
+    if (this.signupForm.valid) {
+      this.regNewUser.userName = this.signupForm.value.userName;
+      this.regNewUser.password = this.signupForm.value.password;
+      this.regNewUser.mobile = this.signupForm.value.mobile;
+      this.regNewUser.email = this.signupForm.value.email;
+      this.regNewUser.location = this.signupForm.value.location;
+
+      this.dataService.regNewUser(this.regNewUser).subscribe(
+        (response) => {
+          // if success, redirect to login page
+          this.signupForm.reset();
+          this.route.navigate(['/login']);
+        },
+        (error) => {
+          // else display appropriate error message
+          console.error('Registration failed:', error);
+        }
+      );
+    }
   }
 
   goBack() {
-
     // should navigate to login page
-
+    this.route.navigate(['/login']);
   }
 
 }
