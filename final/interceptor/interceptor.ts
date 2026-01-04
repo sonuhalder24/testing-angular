@@ -8,9 +8,12 @@ export class HeaderInterceptor implements HttpInterceptor {
   private AUTH_HEADER = "Authorization";
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Check if the request is for login or register endpoints
-    // If so, don't add authentication token
-    if (req.url.includes('/signin') || req.url.includes('/register')) {
+    // Check if the request is for login or user registration endpoints only
+    // Exclude only: /signin and /register (not /patients/register or /appointment/register)
+    const isPublicEndpoint = req.url.includes('/signin') || 
+                             (req.url.includes('/register') && !req.url.includes('/patients/register') && !req.url.includes('/appointment/register'));
+    
+    if (isPublicEndpoint) {
       return next.handle(req);
     }
 
