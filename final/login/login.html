@@ -1,0 +1,106 @@
+<!-- Write necessary code-->
+<div class="login-view-wrapper custom-container">
+  <div class="login-view">
+    <div class="logo-wrapper">
+      <img src="assets/login.png" width="100" height="100" />
+      <h2>LOGIN</h2>
+    </div>
+    <div class="login-form-wrapper">
+      <form class="ro-form" [formGroup]="loginForm" (ngSubmit)="doLogin()">
+        <div class="form-group">
+          <label class="labelHead" for="username">
+            <b>Username</b>
+          </label>
+          <input
+            type="text"
+            id="username"
+            placeholder="username"
+            formControlName="userName"
+          />
+
+          <div
+            *ngIf="(loginForm.get('userName')?.touched || loginForm.get('userName')?.dirty) && loginForm.get('userName')?.hasError('required')"
+            class="form-error-messages"
+            id="error-no-username"
+          >
+            {{ emptyUserName }}
+          </div>
+          <div
+            *ngIf="(loginForm.get('userName')?.touched || loginForm.get('userName')?.dirty) && loginForm.get('userName')?.hasError('minlength')"
+            class="form-error-messages"
+            id="error-minlength-username"
+          >
+            {{ minlengthUserName }}
+          </div>
+          <div
+            *ngIf="(loginForm.get('userName')?.touched || loginForm.get('userName')?.dirty) && loginForm.get('userName')?.hasError('maxlength')"
+            class="form-error-messages"
+            id="error-maxlength-username"
+          >
+            {{ maxlengthUserName }}
+          </div>
+          <div
+            *ngIf="(loginForm.get('userName')?.touched || loginForm.get('userName')?.dirty) && loginForm.get('userName')?.hasError('pattern')"
+            class="form-error-messages"
+            id="error-pattern-username"
+          >
+            {{ userNamePattern }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="labelHead" for="password">
+            <b>Password</b>
+          </label>
+          <input
+            type="password"
+            id="password"
+            placeholder="password"
+            formControlName="password"
+          />
+          <div
+            *ngIf="(loginForm.get('password')?.touched || loginForm.get('password')?.dirty) && loginForm.get('password')?.hasError('required')"
+            class="form-error-messages"
+            id="error-no-password"
+          >
+            {{ emptyPassword }}
+          </div>
+          <div
+            *ngIf="(loginForm.get('password')?.touched || loginForm.get('password')?.dirty) && loginForm.get('password')?.hasError('minlength')"
+            class="form-error-messages"
+            id="error-minlength-password"
+          >
+            {{ minlengthPassword }}
+          </div>
+          <div
+            *ngIf="(loginForm.get('password')?.touched || loginForm.get('password')?.dirty) && loginForm.get('password')?.hasError('maxlength')"
+            class="form-error-messages"
+            id="error-maxlength-password"
+          >
+            {{ maxlengthPassword }}
+          </div>
+          <div
+            *ngIf="(loginForm.get('password')?.touched || loginForm.get('password')?.dirty) && loginForm.get('password')?.hasError('pattern')"
+            class="form-error-messages"
+            id="error-pattern-password"
+          >
+            {{ passwordPattern }}
+          </div>
+        </div>
+        <div class="col-sm-12 clmn12">
+          <!-- disable button if form not valid -->
+          <!-- call doLogin method when clicking on this button-->
+          <button
+            id="loginBtn"
+            [disabled]="loginForm.invalid"
+            class="login-btn"
+            type="submit"
+          >
+            Login
+          </button>
+          <button id="signupBtn" class="guest-btn" (click)="signUp">Sign up</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
