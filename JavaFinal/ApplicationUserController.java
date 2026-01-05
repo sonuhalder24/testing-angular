@@ -22,14 +22,14 @@ public class ApplicationUserController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UserAuthService userDetailsService;
+    private UserAuthService userAuthService;
 
     @Autowired
     private JwtUtil jwtUtil;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody ApplicationUser user) {
-        ApplicationUser savedUser = userDetailsService.save(user);
+        ApplicationUser savedUser = userAuthService.save(user);
         Map<String, String> response = new HashMap<>();
         response.put("message", "User registered successfully");
         return ResponseEntity.ok(response);
@@ -47,8 +47,8 @@ public class ApplicationUserController {
             throw new Exception("Incorrect username or password", e);
         }
 
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUser_name());
-        final String jwt = jwtUtil.generateToken(userDetails);
+        final UserDetails userDetails = userAuthService.loadUserByUsername(authenticationRequest.getUser_name());
+        final String jwt = jwtUtil.generateToken(userDetails.getUsername());
 
         Map<String, String> response = new HashMap<>();
         response.put("token", jwt);
@@ -57,7 +57,7 @@ public class ApplicationUserController {
 
     @GetMapping("/viewprofile/{username}")
     public ResponseEntity<?> getUserProfile(@PathVariable String username) {
-        ApplicationUser user = userDetailsService.findByUsername(username);
+        ApplicationUser user = userAuthService.findByUsername(username);
         if (user != null) {
             return ResponseEntity.ok(user);
         }
