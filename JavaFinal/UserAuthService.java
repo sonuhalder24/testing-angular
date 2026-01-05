@@ -1,16 +1,16 @@
 package com.example.project.service;
 
-import com.example.project.Model.ApplicationUser;
-import com.example.project.repository.ApplicationUserRepository;
+import java.util.Arrays;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
+import com.example.project.Model.ApplicationUser;
+import com.example.project.repository.ApplicationUserRepository;
 
 @Service
 public class UserAuthService implements UserDetailsService {
@@ -18,24 +18,28 @@ public class UserAuthService implements UserDetailsService {
     @Autowired
     private ApplicationUserRepository userRepository;
     
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        ApplicationUser user = userRepository.findByUserName(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found: " + username);
+        // Find user by username
+        Optional<ApplicationUser> userOptional = userRepository.findById(username);
+        
+        if (!userOptional.isPresent()) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
         }
-        return new User(user.getUser_name(), user.getPassword(), new ArrayList<>());
+        
+        ApplicationUser user = userOptional.get();
+        
+        // Create and return UserDetails object
+        return new org.springframework.security.core.userdetails.User(
+            user.getUser_name(),
+            user.getPassword(),
+            Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"))
+        );
     }
     
-    public ApplicationUser save(ApplicationUser user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
-    
+    // Find user by username
     public ApplicationUser findByUsername(String username) {
-        return userRepository.findByUserName(username);
+        Optional<ApplicationUser> user = userRepository.findById(username);
+        return user.orElse(null);
     }
 }
