@@ -1,14 +1,20 @@
 // ApplicationUserRepository.java
 package com.example.project.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import com.example.project.Model.ApplicationUser;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+
 
 @Repository
 public interface ApplicationUserRepository extends JpaRepository<ApplicationUser, String> {
-    ApplicationUser findByUserName(String userName);
+    @Query("SELECT u from ApplicationUser u WHERE u.user_name = :userName")
+    ApplicationUser findByUser_name(@Param("userName") String userName);
 }
+
 
 // ========================================
 
